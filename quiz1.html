@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #question-selection, #question-display, #verification-result {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      margin-top: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+    }
+
+    .question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 16px;
+    }
+
+    #verification-result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="question-selection">
+    <h1>Select a Question:</h1>
+    <button onclick="showQuestion(1)">Question 1</button>
+    <button onclick="showQuestion(2)">Question 2</button>
+    <button onclick="showQuestion(3)">Question 3</button>
+    <button onclick="showQuestion(4)">Question 4</button>
+    <button onclick="showQuestion(5)">Question 5</button>
+  </div>
+
+  <div id="question-display" style="display: none;">
+    <h1>Question:</h1>
+    <div id="question-text"></div>
+    <form id="answer-form">
+      <label for="answer">Select the correct answer:</label><br>
+      <input type="radio" name="answer" value="A" id="answerA"> <label for="answerA" id="labelA"></label><br>
+      <input type="radio" name="answer" value="B" id="answerB"> <label for="answerB" id="labelB"></label><br>
+      <input type="radio" name="answer" value="C" id="answerC"> <label for="answerC" id="labelC"></label><br>
+      <button type="button" onclick="checkAnswer()">Submit Answer</button>
+    </form>
+    <div id="verification-result" style="display: none;"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { question: "What is the capital of India?", options: ["West Bengal", "Delhi", "Mizoram"], answer: "B" },
+      { question: "What is the capital of France?", options: ["Berlin", "London", "Paris"], answer: "C" },
+      { question: "What is the square root of 25?", options: ["5", "10", "25"], answer: "A" },
+      { question: "What is the largest ocean?", options: ["Atlantic", "Indian", "Pacific"], answer: "C" },
+      { question: "What is the tallest mountain in the world?", options: ["K2", "Mount Everest", "Kangchenjunga"], answer: "B" }
+    ];
+
+    let currentQuestion = {};
+
+    function showQuestion(index) {
+      currentQuestion = questions[index - 1];
+      document.getElementById('question-text').innerText = currentQuestion.question;
+      document.getElementById('labelA').innerText = currentQuestion.options[0];
+      document.getElementById('labelB').innerText = currentQuestion.options[1];
+      document.getElementById('labelC').innerText = currentQuestion.options[2];
+      document.getElementById('verification-result').style.display = 'none';
+      document.getElementById('question-selection').style.display = 'none';
+      document.getElementById('question-display').style.display = 'block';
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.querySelector('input[name="answer"]:checked');
+      if (!userAnswer) {
+        alert("Please select an answer.");
+        return;
+      }
+
+      const verificationResult = (userAnswer.value === currentQuestion.answer) ? "Correct!" : "Incorrect!";
+      document.getElementById('verification-result').innerText = `Your answer is: ${verificationResult}`;
+      document.getElementById('verification-result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
